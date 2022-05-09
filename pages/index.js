@@ -1,5 +1,7 @@
 import React from "react"
 import ReactMarkdown from "react-markdown"
+import KitCard from "../components/kit-card"
+import NextImage from "../components/image"
 import Layout from "../components/layout"
 import Seo from "../components/seo"
 import { fetchAPI } from "../lib/api"
@@ -11,24 +13,32 @@ const Home = ({ hero, seo, explore_archetypes }) => {
   return (
     <Layout categories={[]}>
       <Seo seo={seo} />
-      <div className="uk-section">
-        <div className="uk-container uk-container-large">
-          <h1>{hero.title}</h1>
-
-          <h2>{heading}</h2>
-          <p>{subheading}</p>
-          {kitsList.map((kit) => {
-            const { name, card_summary, main_description } = kit.attributes
-            return (
-              <div key={name}>
-                <h2>{name}</h2>
-                <ReactMarkdown source={card_summary} escapeHtml={false} />
-                <ReactMarkdown source={main_description} escapeHtml={false} />
-              </div>
-            )
-          })}
+      <section className="uk-section uk-section-xsmall">
+        <div className="uk-container uk-container-medium">
+          <section className="uk-grid uk-background-muted uk-child-width-1-2@m">
+            <div>
+              <h1>{hero.title}</h1>
+              <button className="uk-button uk-button-default">
+                shop archetypes
+              </button>
+            </div>
+            <div>
+              <NextImage image={hero.hero_image} />
+            </div>
+          </section>
         </div>
-      </div>
+      </section>
+      <section className="uk-section">
+        <h2 className="uk-text-center">{heading}</h2>
+        <p className="uk-text-center">{subheading}</p>
+        <div className="uk-grid uk-grid-medium uk-flex-center">
+          {kitsList.map((kit) => (
+            <div key={kit.name} className="uk-width-1-4@m">
+              <KitCard attributes={kit.attributes} />
+            </div>
+          ))}
+        </div>
+      </section>
     </Layout>
   )
 }
@@ -38,9 +48,15 @@ export async function getStaticProps() {
   const [homepageRes] = await Promise.all([
     fetchAPI("/homepage", {
       populate: {
-        hero: "*",
+        hero: { populate: "*" },
         seo: { populate: "*" },
-        explore_archetypes: { populate: "*" },
+        explore_archetypes: {
+          populate: {
+            kits: {
+              populate: "thumbnail_img",
+            },
+          },
+        },
       },
     }),
   ])
