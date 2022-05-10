@@ -13,12 +13,12 @@ const Home = ({ hero, seo, explore_archetypes }) => {
   return (
     <Layout categories={[]}>
       <Seo seo={seo} />
-      <section className="uk-section uk-section-xsmall">
+      <section className="uk-section uk-section-xsmall uk-background-muted">
         <div className="uk-container uk-container-medium">
-          <section className="uk-grid uk-background-muted uk-child-width-1-2@m">
+          <section className="uk-grid uk-background-muted uk-child-width-1-2@m  uk-flex-middle">
             <div>
               <h1>{hero.title}</h1>
-              <button className="uk-button uk-button-default">
+              <button className="uk-button uk-button-primary">
                 shop archetypes
               </button>
             </div>
