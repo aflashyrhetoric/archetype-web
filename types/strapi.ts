@@ -30,9 +30,16 @@ export type StrapiImageFormats = {
 
 export type StrapiImageAttributes = {
   name: string
-  alternativeText: string
-  caption: string
+  url: string
   width: number
   height: number
   formats: StrapiImageFormats
+  
+  alternativeText: string
+  caption: string
+  previewUrl: string
+  size: number
+  mime: string
+  ext: string
+  hash: string
 }

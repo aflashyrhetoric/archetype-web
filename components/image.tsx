@@ -1,7 +1,12 @@
 import { getStrapiMedia } from "../lib/media"
 import NextImage from "next/image"
 
-const Image = ({ image, style }) => {
+interface Props {
+  image: any
+  style?: any
+}
+
+const Image = ({ image, style }: Props) => {
   const { url, alternativeText, width, height } = image.data.attributes
 
   // const loader = () => {

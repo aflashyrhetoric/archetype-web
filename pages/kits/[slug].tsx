@@ -1,6 +1,4 @@
 //FORMERLY: [slug].js
-import ReactMarkdown from "react-markdown"
-import Moment from "react-moment"
 import { fetchAPI } from "../../lib/api"
 import Layout from "../../components/layout"
 import NextImage from "../../components/image"
@@ -13,18 +11,17 @@ interface Props {
 }
 
 const Article = ({ kit }: Props) => {
-  const imageUrl = getStrapiMedia(kit.attributes.thumbnail_img)
+  const { attributes } = kit
+
+  const { quote, short_description, name, products, thumbnail_img } = attributes
+  const { body, author } = quote.data.attributes
 
   const seo = {
-    metaTitle: kit.attributes.name,
-    metaDescription: kit.attributes.short_description,
-    shareImage: kit.attributes.thumbnail_img,
+    metaTitle: name,
+    metaDescription: short_description,
+    shareImage: thumbnail_img,
     kit: true,
   }
-
-  const { quote, short_description, name, publishedAt, products } =
-    kit.attributes
-  const { body, author } = quote.data.attributes
 
   return (
     <Layout categories={[]}>
@@ -35,22 +32,21 @@ const Article = ({ kit }: Props) => {
           <pre>{JSON.stringify(kit, null, 2)}</pre>
         </code>
       </div>
-      <div className="uk-section">
+      <div
+        className="uk-section uk-background-cover uk-panel"
+        style={{
+          backgroundImage: `url('${thumbnail_img.data.attributes.url}')`,
+        }}
+      >
         <div className="uk-container uk-container-small">
+          <NextImage image={thumbnail_img} />
           <p>
             {body} - {author}
           </p>
           <p>{short_description}</p>
-          {Object.values(products.data).map((product) => (
+          {products.data.map((product) => (
             <p>{product.attributes.name}</p>
           ))}
-          {/* <div className="uk-grid-small uk-flex-left" data-uk-grid="true">
-            <div className="uk-width-expand">
-              <p className="uk-text-meta uk-margin-remove-top">
-                <Moment format="MMM Do YYYY">{publishedAt}</Moment>
-              </p>
-            </div>
-          </div> */}
         </div>
       </div>
       {/* <ReactMarkdown source={content} escapeHtml={false} /> */}
@@ -77,9 +73,7 @@ export async function getStaticProps({ params }) {
       slug: params.slug,
     },
     populate: "*",
-    encodeValuesOnly: true,
   })
-  // const categoriesRes = await fetchAPI("/categories")
 
   return {
     props: { kit: kitsRes.data[0] },
