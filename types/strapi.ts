@@ -6,8 +6,11 @@ export type DataSingleBlobInResponse<T> = {
 export type RelationSingle<T> = {
   data: DataSingleBlobInResponse<T>
 }
+
+export type DataManyBlobInResponse<T> = Array<DataSingleBlobInResponse<T>>
+
 export type RelationMany<T> = {
-  data: Array<DataSingleBlobInResponse<T>>
+  data: DataManyBlobInResponse<T>
 }
 
 export type StrapiImageFormat = {
@@ -34,7 +37,7 @@ export type StrapiImageAttributes = {
   width: number
   height: number
   formats: StrapiImageFormats
-  
+
   alternativeText: string
   caption: string
   previewUrl: string

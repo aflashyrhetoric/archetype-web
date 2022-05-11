@@ -61,7 +61,7 @@ export async function getStaticProps() {
     }),
   ])
 
-  const { hero, seo, explore_archetypes } = homepageRes?.data.attributes
+  const { hero, seo, explore_archetypes } = homepageRes.data.attributes
 
   return {
     props: {

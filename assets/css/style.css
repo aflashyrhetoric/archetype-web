@@ -1,3 +1,18 @@
+.heroHighlight {
+  display: inline-block;
+  background: linear-gradient(93.26deg, #4b5dff 0%, #7033be 105.94%);
+  padding: 4px;
+  border-radius: 4px;
+  color: white;
+  text-transform: lowercase;
+}
+
+h1 {
+  font-family: "IBM Plex Sans", sans-serif;
+  /* font-weight: 700; */
+  /* font-size: 120px; */
+}
+
 /* a {
   text-decoration: none;
 }

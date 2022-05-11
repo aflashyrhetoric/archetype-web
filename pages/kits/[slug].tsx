@@ -1,19 +1,31 @@
 //FORMERLY: [slug].js
+import React, { useState } from "react"
 import { fetchAPI } from "../../lib/api"
 import Layout from "../../components/layout"
 import NextImage from "../../components/image"
 import Seo from "../../components/seo"
+import {
+  KitAttributes,
+  KitResponse,
+  ProductAttributes,
+  ProductCategoryMap,
+  ProductResponse,
+} from "../../types/types"
+import {
+  DataManyBlobInResponse,
+  DataSingleBlobInResponse,
+} from "../../types/strapi"
 import { getStrapiMedia } from "../../lib/media"
-import { KitResponse, ProductAttributes } from "../../types/types"
 
 interface Props {
-  kit: KitResponse
+  kit: DataSingleBlobInResponse<KitAttributes>
+  products: DataManyBlobInResponse<ProductAttributes>
 }
 
-const Article = ({ kit }: Props) => {
+const Article = ({ kit, products }: Props) => {
   const { attributes } = kit
-
-  const { quote, short_description, name, products, thumbnail_img } = attributes
+  const { archetype, quote, short_description, name, thumbnail_img } =
+    attributes
   const { body, author } = quote.data.attributes
 
   const seo = {
@@ -23,30 +35,90 @@ const Article = ({ kit }: Props) => {
     kit: true,
   }
 
+  const categories = Array.from(
+    new Set(products?.map((product) => product.attributes.category))
+  )
+
+  const [activeCategory, setActiveCategory] = useState(categories[0])
+
+  const categoryToProductMap = categories.reduce(
+    (acc, curr) => ({
+      ...acc,
+      [curr]: products.filter(
+        (product) => product.attributes.category === curr
+      ),
+    }),
+    {}
+  ) as ProductCategoryMap
+
   return (
     <Layout categories={[]}>
       <Seo seo={seo} />
-      <div id="banner">
-        <h1>{name}</h1>
-        <code>
-          <pre>{JSON.stringify(kit, null, 2)}</pre>
-        </code>
-      </div>
+      <section className="uk-section uk-section-xsmall uk-background-muted">
+        <div className="uk-container uk-container-medium">
+          <section className="uk-grid uk-background-muted uk-child-width-1-2@m  uk-flex-middle">
+            <div>
+              <h1 className="uk-text-bold">{name}</h1>
+              <h3>
+                A curated kit for{" "}
+                <span className="heroHighlight">
+                  {archetype.data.attributes.name}
+                </span>
+              </h3>
+            </div>
+            <div>
+              <NextImage image={thumbnail_img} />
+            </div>
+          </section>
+        </div>
+      </section>
       <div
         className="uk-section uk-background-cover uk-panel"
         style={{
-          backgroundImage: `url('${thumbnail_img.data.attributes.url}')`,
+          backgroundImage: `url('${getStrapiMedia(thumbnail_img)}')`,
         }}
       >
         <div className="uk-container uk-container-small">
-          <NextImage image={thumbnail_img} />
-          <p>
-            {body} - {author}
+          <p className="uk-text-center uk-text-large uk-text-bold">
+            &quot;{body}&quot; - {author}
           </p>
-          <p>{short_description}</p>
-          {products.data.map((product) => (
-            <p>{product.attributes.name}</p>
-          ))}
+          <p className="uk-text-center uk-text-large">{short_description}</p>
+
+          <div className="uk-flex uk-flex-center">
+            {categories.map((category) => (
+              <a
+                key={category}
+                className={
+                  activeCategory === category
+                    ? "uk-active uk-button uk-button-default"
+                    : "uk-button uk-button-default"
+                }
+                onClick={() => setActiveCategory(category)}
+              >
+                {category}
+              </a>
+            ))}
+          </div>
+
+          {categoryToProductMap[activeCategory].map((product) => {
+            console.log(product)
+            return (
+              <div
+                key={product.attributes.name}
+                className="uk-section uk-background-cover uk-panel"
+                style={{
+                  backgroundImage: `url('${getStrapiMedia(
+                    product.attributes.photo
+                  )}')`,
+                }}
+              >
+                <p>{product.attributes.long_description}</p>
+                {/* <code>
+                  <pre>{JSON.stringify(product, null, 2)}</pre>
+                </code> */}
+              </div>
+            )
+          })}
         </div>
       </div>
       {/* <ReactMarkdown source={content} escapeHtml={false} /> */}
@@ -68,15 +140,33 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }) {
-  const kitsRes = await fetchAPI("/kits", {
+  const kitsRes: KitResponse = await fetchAPI("/kits", {
     filters: {
       slug: params.slug,
     },
     populate: "*",
   })
 
+  const productsRes: ProductResponse = await fetchAPI("/products", {
+    populate: {
+      photo: {
+        populate: "*",
+      },
+      kits: {
+        filters: {
+          name: {
+            $eq: params.slug,
+          },
+        },
+      },
+    },
+  })
+
   return {
-    props: { kit: kitsRes.data[0] },
+    props: {
+      kit: kitsRes.data[0],
+      products: productsRes.data,
+    },
     revalidate: 1,
   }
 }

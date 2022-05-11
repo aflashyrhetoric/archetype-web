@@ -3,12 +3,22 @@ import {
   DataSingleBlobInResponse,
   RelationSingle,
   RelationMany,
+  DataManyBlobInResponse,
 } from "./strapi"
 
 type timestamps = {
   createdAt: string
   updatedAt: string
   publishedAt: string
+}
+
+export enum ProductCategory {
+  TheDesk = "the desk",
+  IO = "i/o",
+  Tech = "tech",
+  Monitors = "monitors",
+  Audio = "audio",
+  Decor = "decor",
 }
 
 export type ProductAttributes = timestamps & {
@@ -21,6 +31,8 @@ export type ProductAttributes = timestamps & {
   long_description: string
   price: number
   sale_price: number
+  category: ProductCategory
+  photo: RelationSingle<StrapiImageAttributes>
 }
 
 export type QuoteAttributes = timestamps & {
@@ -30,6 +42,7 @@ export type QuoteAttributes = timestamps & {
 
 export type ArchetypeAttributes = {
   name: string
+  main_image: StrapiImageAttributes
   createdAt: string
   updatedAt: string
   publishedAt: string
@@ -50,6 +63,10 @@ export type KitAttributes = timestamps & {
   quote: QuoteResponse
 }
 
-export type KitResponse = DataSingleBlobInResponse<KitAttributes>
+export type KitResponse = RelationSingle<KitAttributes>
 export type ProductResponse = RelationSingle<ProductAttributes>
 export type QuoteResponse = RelationSingle<QuoteAttributes>
+
+export type ProductCategoryMap = {
+  [key in ProductCategory]: DataManyBlobInResponse<ProductAttributes>
+}
