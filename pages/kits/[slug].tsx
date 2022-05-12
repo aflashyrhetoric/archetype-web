@@ -54,14 +54,14 @@ const Article = ({ kit, products }: Props) => {
   return (
     <Layout categories={[]}>
       <Seo seo={seo} />
-      <section className="uk-section uk-section-xsmall uk-background-muted">
+      <section className="uk-section uk-section-xsmall uk-background-secondary">
         <div className="uk-container uk-container-medium">
-          <section className="uk-grid uk-background-muted uk-child-width-1-2@m  uk-flex-middle">
+          <section className="uk-grid uk-background-secondary uk-child-width-1-2@m  uk-flex-middle">
             <div>
-              <h1 className="uk-text-bold">{name}</h1>
-              <h3>
+              <h1 className="uk-text-bold uk-light">{name}</h1>
+              <h3 className="uk-light">
                 A curated kit for{" "}
-                <span className="heroHighlight">
+                <span className="heroHighlight uk-light">
                   {archetype.data.attributes.name}
                 </span>
               </h3>
@@ -73,12 +73,12 @@ const Article = ({ kit, products }: Props) => {
         </div>
       </section>
       <div
-        className="uk-section uk-background-cover uk-panel"
-        style={{
-          backgroundImage: `url('${getStrapiMedia(thumbnail_img)}')`,
-        }}
+        className="uk-section uk-background-cover uk-panel uk-background-secondary uk-light"
+        // style={{
+        //   backgroundImage: `url('${getStrapiMedia(thumbnail_img)}')`,
+        // }}
       >
-        <div className="uk-container uk-container-small">
+        <div className="uk-container uk-container-large">
           <p className="uk-text-center uk-text-large uk-text-bold">
             &quot;{body}&quot; - {author}
           </p>
