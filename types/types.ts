@@ -21,6 +21,10 @@ export enum ProductCategory {
   Decor = "decor",
 }
 
+export type BrandAttributes = timestamps & {
+  name: string
+}
+
 export type ProductAttributes = timestamps & {
   name: string
   url: string
@@ -33,6 +37,7 @@ export type ProductAttributes = timestamps & {
   sale_price: number
   category: ProductCategory
   photo: RelationSingle<StrapiImageAttributes>
+  brand: RelationSingle<BrandAttributes>
 }
 
 export type QuoteAttributes = timestamps & {

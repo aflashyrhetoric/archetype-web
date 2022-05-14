@@ -4,18 +4,18 @@ import Link from "next/link"
 const Nav = ({ categories }) => {
   return (
     <div>
-      <nav className="uk-navbar-container" data-uk-navbar>
-        <div className="uk-navbar-left">
+      <nav className="uk-navbar-container uk-background-secondary">
+        <div className="uk-navbar-left uk-background-secondary">
           <ul className="uk-navbar-nav">
             <li>
               <Link href="/">
-                <a>Strapi Blog</a>
+                <a>archetype</a>
               </Link>
             </li>
           </ul>
         </div>
-        <div className="uk-navbar-right">
-          <ul className="uk-navbar-nav">
+        <div className="uk-navbar-right uk-background-secondary">
+          {/* <ul className="uk-navbar-nav">
             {categories.map((category) => {
               return (
                 <li key={category.id}>
@@ -25,7 +25,7 @@ const Nav = ({ categories }) => {
                 </li>
               )
             })}
-          </ul>
+          </ul> */}
         </div>
       </nav>
     </div>

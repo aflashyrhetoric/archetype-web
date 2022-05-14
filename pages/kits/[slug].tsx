@@ -1,5 +1,6 @@
-//FORMERLY: [slug].js
 import React, { useState } from "react"
+import ReactMarkdown from "react-markdown"
+import Link from "next/link"
 import { fetchAPI } from "../../lib/api"
 import Layout from "../../components/layout"
 import NextImage from "../../components/image"
@@ -23,6 +24,8 @@ interface Props {
 }
 
 const Article = ({ kit, products }: Props) => {
+  console.log(products)
+
   const { attributes } = kit
   const { archetype, quote, short_description, name, thumbnail_img } =
     attributes
@@ -78,13 +81,13 @@ const Article = ({ kit, products }: Props) => {
         //   backgroundImage: `url('${getStrapiMedia(thumbnail_img)}')`,
         // }}
       >
-        <div className="uk-container uk-container-large">
+        <div className="uk-container uk-container-small">
           <p className="uk-text-center uk-text-large uk-text-bold">
             &quot;{body}&quot; - {author}
           </p>
           <p className="uk-text-center uk-text-large">{short_description}</p>
 
-          <div className="uk-flex uk-flex-center">
+          <div className="uk-flex uk-flex-center uk-margin-large-bottom">
             {categories.map((category) => (
               <a
                 key={category}
@@ -99,27 +102,64 @@ const Article = ({ kit, products }: Props) => {
               </a>
             ))}
           </div>
-
-          {categoryToProductMap[activeCategory].map((product) => {
-            console.log(product)
-            return (
-              <div
-                key={product.attributes.name}
-                className="uk-section uk-background-cover uk-panel"
-                style={{
-                  backgroundImage: `url('${getStrapiMedia(
-                    product.attributes.photo
-                  )}')`,
-                }}
-              >
-                <p>{product.attributes.long_description}</p>
-                {/* <code>
-                  <pre>{JSON.stringify(product, null, 2)}</pre>
-                </code> */}
-              </div>
-            )
-          })}
         </div>
+
+        {categoryToProductMap[activeCategory].map((product) => {
+          return (
+            <div
+              key={product.attributes.name}
+              className="uk-section uk-background-cover uk-panel productBackground"
+              style={{
+                backgroundImage: `url('${getStrapiMedia(
+                  product.attributes.photo
+                )}')`,
+              }}
+            >
+              <div className="uk-container uk-flex uk-child-width-1-2">
+                <div className="uk-flex uk-flex-column uk-flex-between">
+                  <div>
+                    <h3 className="uk-text-lead uk-text-bolder">
+                      {product.attributes.name}
+                    </h3>
+                    <p className="uk-text-italic">
+                      {product.attributes.brand.data.attributes.name}
+                    </p>
+
+                    <Link
+                      href={`/kits/${product.attributes.affiliate_link}`}
+                      passHref
+                    >
+                      <button className="uk-button uk-button-default">
+                        buy @ {product.attributes.brand.data.attributes.name}
+                      </button>
+                    </Link>
+                  </div>
+                  <div>
+                    <h4>Overview</h4>
+                    {/* <code>
+                      <pre>
+                        {JSON.stringify(product.attributes.pros, null, 2)}
+                      </pre>
+                    </code> */}
+                    <p>Pros</p>
+                    <ReactMarkdown>{product.attributes.pros}</ReactMarkdown>
+                    <p>Cons</p>
+                    <ReactMarkdown>{product.attributes.cons}</ReactMarkdown>
+                  </div>
+                </div>
+
+                <div className="uk-flex uk-flex-column">
+                  <p className="productDescription">
+                    {product.attributes.long_description}
+                  </p>
+                  <button className="uk-button uk-button-default">
+                    buy @ {product.attributes.brand.data.attributes.name}
+                  </button>
+                </div>
+              </div>
+            </div>
+          )
+        })}
       </div>
       {/* <ReactMarkdown source={content} escapeHtml={false} /> */}
     </Layout>
@@ -151,6 +191,9 @@ export async function getStaticProps({ params }) {
     populate: {
       photo: {
         populate: "*",
+      },
+      brand: {
+        fields: ["name"],
       },
       kits: {
         filters: {

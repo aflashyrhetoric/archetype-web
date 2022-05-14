@@ -2,8 +2,9 @@ import React from "react"
 import ReactMarkdown from "react-markdown"
 import NextImage from "./image"
 import Link from "next/link"
+import { KitAttributes } from "../types/types"
 
-const KitCard = ({ attributes }) => {
+const KitCard = ({ attributes }: { attributes: KitAttributes }) => {
   const { name, card_summary, slug, thumbnail_img } = attributes
   return (
     <div className="uk-card uk-card-default uk-card-hover" key={name}>
