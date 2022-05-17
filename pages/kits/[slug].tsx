@@ -18,6 +18,7 @@ import {
 } from "../../types/strapi"
 import { getStrapiMedia } from "../../lib/media"
 import { getStyleBlob, getThumb } from "../../lib/youtube-thumbnail"
+import ProductCardLargeImage from "../../components/product-card-large-image"
 
 interface Props {
   kit: DataSingleBlobInResponse<KitAttributes>
@@ -104,88 +105,7 @@ const KitPage = ({ kit, products }: Props) => {
         </div>
 
         {categoryToProductMap[activeCategory].map((product) => {
-          return (
-            <div
-              key={product.attributes.name}
-              className="uk-section uk-background-cover uk-panel productBackground"
-              style={{
-                backgroundImage: `url('${getStrapiMedia(
-                  product.attributes.photo
-                )}')`,
-              }}
-            >
-              <div className="uk-container uk-flex uk-child-width-1-2 uk-margin-large-bottom">
-                <div className="uk-flex uk-flex-column uk-flex-between">
-                  <div className="uk-padding ko-border productSummary">
-                    <h3 className="uk-text-bolder">
-                      {product.attributes.name}
-                    </h3>
-                    <p className="uk-text-italic uk-margin-large-bottom">
-                      {product.attributes.brand.data.attributes.name}
-                    </p>
-
-                    <Link href={product.attributes.affiliate_link} passHref>
-                      <button className="uk-button uk-button-secondary">
-                        buy @ {product.attributes.brand.data.attributes.name}
-                      </button>
-                    </Link>
-                  </div>
-                  <div>
-                    <h3 className="uk-text-bolder">Overview</h3>
-                    <p>Pros</p>
-                    <ReactMarkdown>{product.attributes.pros}</ReactMarkdown>
-                    <p>Cons</p>
-                    <ReactMarkdown>{product.attributes.cons}</ReactMarkdown>
-                  </div>
-                </div>
-
-                <div className="uk-flex uk-flex-column uk-margin-large-left">
-                  <p className="productDescription uk-dropcap">
-                    {product.attributes.long_description}
-                  </p>
-                  <button className="uk-button uk-button-default">
-                    buy @ {product.attributes.brand.data.attributes.name}
-                  </button>
-                </div>
-              </div>
-
-              <div className="uk-container">
-                <h3 className="uk-text-bolder">In the media</h3>
-                <div className="uk-margin-top uk-flex uk-flex-between uk-child-width-1-3@m">
-                  {product.attributes.media_product_reviews.data.map(
-                    (review) => {
-                      return (
-                        <div
-                          key={review.id}
-                          className="productReview"
-                          style={getStyleBlob(review.attributes.url)}
-                        >
-                          <div className="productReviewData">
-                            <h4 className="uk-text-center uk-text-bold">
-                              {review.attributes.videoTitle}
-                            </h4>
-                            <Link
-                              href={review.attributes.url}
-                              passHref
-                              target="_blank"
-                              rel="noreferrer noopener"
-                            >
-                              <button className="uk-button uk-button-secondary">
-                                View @ YouTube
-                              </button>
-                            </Link>
-                          </div>
-                        </div>
-                      )
-                    }
-                  )}
-                  {/* <code>
-                  <pre>{JSON.stringify(product.attributes, null, 2)}</pre>
-                </code> */}
-                </div>
-              </div>
-            </div>
-          )
+          return <ProductCardLargeImage key={product.id} product={product} />
         })}
       </div>
       {/* <ReactMarkdown source={content} escapeHtml={false} /> */}

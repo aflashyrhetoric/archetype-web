@@ -38,6 +38,23 @@ ol li {
   min-height: 80vh;
 }
 
+.productBackground :not(.productBackgroundImage) {
+  z-index: 1;
+}
+
+.productBackgroundImage {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  filter: brightness(0.5);
+  background-size: cover;
+  background-position: center;
+}
+
+
 .productDescription {
   font-size: 24px;
   font-weight: 700;
@@ -64,7 +81,7 @@ ol li {
   align-items: center;
 
   opacity: 0;
-  transition: opacity 0.1s ease-in-out;
+  transition: opacity 0.2s ease-in-out;
 
   background: rgba(0, 0, 0, 0.5);
   color: white;
