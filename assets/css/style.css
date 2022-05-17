@@ -23,6 +23,17 @@ ol li {
   font-family: var(--font-default);
 }
 
+.ko-border {
+  border: 3px solid #fff;
+  border-radius: 6px;
+}
+
+.productSummary,
+.productBackground,
+.productDescription {
+  color: white;
+}
+
 .productBackground {
   min-height: 80vh;
 }
@@ -30,6 +41,31 @@ ol li {
 .productDescription {
   font-size: 24px;
   font-weight: 700;
-  color: white;
   font-size: 24px;
+}
+
+.productReview {
+  position: relative;
+  max-width: 380px;
+  border: 5px solid white;
+  border-radius: 6px;
+}
+
+.productReview:hover .productReviewData {
+  opacity: 1;
+}
+
+.productReviewData {
+  min-height: 100%;
+  max-width: 100%;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+
+  opacity: 0;
+  transition: opacity 0.1s ease-in-out;
+
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
 }

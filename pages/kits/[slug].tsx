@@ -17,15 +17,14 @@ import {
   DataSingleBlobInResponse,
 } from "../../types/strapi"
 import { getStrapiMedia } from "../../lib/media"
+import { getStyleBlob, getThumb } from "../../lib/youtube-thumbnail"
 
 interface Props {
   kit: DataSingleBlobInResponse<KitAttributes>
   products: DataManyBlobInResponse<ProductAttributes>
 }
 
-const Article = ({ kit, products }: Props) => {
-  console.log(products)
-
+const KitPage = ({ kit, products }: Props) => {
   const { attributes } = kit
   const { archetype, quote, short_description, name, thumbnail_img } =
     attributes
@@ -115,32 +114,24 @@ const Article = ({ kit, products }: Props) => {
                 )}')`,
               }}
             >
-              <div className="uk-container uk-flex uk-child-width-1-2">
+              <div className="uk-container uk-flex uk-child-width-1-2 uk-margin-large-bottom">
                 <div className="uk-flex uk-flex-column uk-flex-between">
-                  <div>
-                    <h3 className="uk-text-lead uk-text-bolder">
+                  <div className="uk-padding ko-border productSummary">
+                    <h3 className="uk-text-bolder">
                       {product.attributes.name}
                     </h3>
-                    <p className="uk-text-italic">
+                    <p className="uk-text-italic uk-margin-large-bottom">
                       {product.attributes.brand.data.attributes.name}
                     </p>
 
-                    <Link
-                      href={`/kits/${product.attributes.affiliate_link}`}
-                      passHref
-                    >
-                      <button className="uk-button uk-button-default">
+                    <Link href={product.attributes.affiliate_link} passHref>
+                      <button className="uk-button uk-button-secondary">
                         buy @ {product.attributes.brand.data.attributes.name}
                       </button>
                     </Link>
                   </div>
                   <div>
-                    <h4>Overview</h4>
-                    {/* <code>
-                      <pre>
-                        {JSON.stringify(product.attributes.pros, null, 2)}
-                      </pre>
-                    </code> */}
+                    <h3 className="uk-text-bolder">Overview</h3>
                     <p>Pros</p>
                     <ReactMarkdown>{product.attributes.pros}</ReactMarkdown>
                     <p>Cons</p>
@@ -148,13 +139,49 @@ const Article = ({ kit, products }: Props) => {
                   </div>
                 </div>
 
-                <div className="uk-flex uk-flex-column">
-                  <p className="productDescription">
+                <div className="uk-flex uk-flex-column uk-margin-large-left">
+                  <p className="productDescription uk-dropcap">
                     {product.attributes.long_description}
                   </p>
                   <button className="uk-button uk-button-default">
                     buy @ {product.attributes.brand.data.attributes.name}
                   </button>
+                </div>
+              </div>
+
+              <div className="uk-container">
+                <h3 className="uk-text-bolder">In the media</h3>
+                <div className="uk-margin-top uk-flex uk-flex-between uk-child-width-1-3@m">
+                  {product.attributes.media_product_reviews.data.map(
+                    (review) => {
+                      return (
+                        <div
+                          key={review.id}
+                          className="productReview"
+                          style={getStyleBlob(review.attributes.url)}
+                        >
+                          <div className="productReviewData">
+                            <h4 className="uk-text-center uk-text-bold">
+                              {review.attributes.videoTitle}
+                            </h4>
+                            <Link
+                              href={review.attributes.url}
+                              passHref
+                              target="_blank"
+                              rel="noreferrer noopener"
+                            >
+                              <button className="uk-button uk-button-secondary">
+                                View @ YouTube
+                              </button>
+                            </Link>
+                          </div>
+                        </div>
+                      )
+                    }
+                  )}
+                  {/* <code>
+                  <pre>{JSON.stringify(product.attributes, null, 2)}</pre>
+                </code> */}
                 </div>
               </div>
             </div>
@@ -195,6 +222,9 @@ export async function getStaticProps({ params }) {
       brand: {
         fields: ["name"],
       },
+      media_product_reviews: {
+        populate: "*",
+      },
       kits: {
         filters: {
           name: {
@@ -214,4 +244,4 @@ export async function getStaticProps({ params }) {
   }
 }
 
-export default Article
+export default KitPage

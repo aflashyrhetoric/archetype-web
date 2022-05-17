@@ -21,6 +21,11 @@ export enum ProductCategory {
   Decor = "decor",
 }
 
+export type MediaProductReviewAttributes = timestamps & {
+  videoTitle: string
+  url: string
+}
+
 export type BrandAttributes = timestamps & {
   name: string
 }
@@ -38,6 +43,7 @@ export type ProductAttributes = timestamps & {
   category: ProductCategory
   photo: RelationSingle<StrapiImageAttributes>
   brand: RelationSingle<BrandAttributes>
+  media_product_reviews: RelationMany<MediaProductReviewAttributes>
 }
 
 export type QuoteAttributes = timestamps & {
