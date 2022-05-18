@@ -1,9 +1,9 @@
 import {
-  StrapiImageAttributes,
-  DataSingleBlobInResponse,
-  RelationSingle,
-  RelationMany,
   DataManyBlobInResponse,
+  DataSingleBlobInResponse,
+  RelationMany,
+  RelationSingle,
+  StrapiImageAttributes,
 } from "./strapi"
 
 type timestamps = {
@@ -30,6 +30,8 @@ export type BrandAttributes = timestamps & {
   name: string
 }
 
+export type ImageRelation = RelationSingle<StrapiImageAttributes>
+
 export type ProductAttributes = timestamps & {
   name: string
   url: string
@@ -41,7 +43,7 @@ export type ProductAttributes = timestamps & {
   price: number
   sale_price: number
   category: ProductCategory
-  photo: RelationSingle<StrapiImageAttributes>
+  photo: ImageRelation
   brand: RelationSingle<BrandAttributes>
   media_product_reviews: RelationMany<MediaProductReviewAttributes>
 }
@@ -67,8 +69,8 @@ export type KitAttributes = timestamps & {
   main_description: string
   short_description: string
 
-  thumbnail_img: RelationSingle<StrapiImageAttributes>
-  stylized_name_img: RelationSingle<StrapiImageAttributes>
+  thumbnail_img: ImageRelation
+  stylized_name_img: ImageRelation
   archetype: RelationSingle<ArchetypeAttributes>
   products: RelationMany<ProductAttributes>
   quote: QuoteResponse

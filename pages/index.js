@@ -1,8 +1,7 @@
-import React from "react"
-import ReactMarkdown from "react-markdown"
 import KitCard from "../components/kit-card"
-import NextImage from "../components/image"
 import Layout from "../components/layout"
+import NextImage from "../components/image"
+import React from "react"
 import Seo from "../components/seo"
 import { fetchAPI } from "../lib/api"
 
@@ -13,12 +12,14 @@ const Home = ({ hero, seo, explore_archetypes }) => {
   return (
     <Layout categories={[]}>
       <Seo seo={seo} />
-      <section className="uk-section uk-section-xsmall uk-background-muted">
-        <div className="uk-container uk-container-medium">
-          <section className="uk-grid uk-background-muted uk-child-width-1-2@m  uk-flex-middle">
+      <section className="uk-section uk-section-xsmall uk-section-secondary">
+        <div className="uk-container uk-container-medium uk-margin-large-bottom">
+          <section className="uk-grid uk-child-width-1-2@m  uk-flex-middle">
             <div>
-              <h1>{hero.title}</h1>
-              <button className="uk-button uk-button-primary">
+              <h1 className="uk-text-bolder uk-margin-large-bottom">
+                {hero.title}
+              </h1>
+              <button className="uk-button uk-button-primary uk-button-large">
                 shop archetypes
               </button>
             </div>
@@ -29,8 +30,8 @@ const Home = ({ hero, seo, explore_archetypes }) => {
         </div>
       </section>
       <section className="uk-section">
-        <h2 className="uk-text-center">{heading}</h2>
-        <p className="uk-text-center">{subheading}</p>
+        <h2 className="uk-text-center uk-text-bold">{heading}</h2>
+        <p className="uk-text-center uk-margin-large-bottom">{subheading}</p>
         <div className="uk-grid uk-grid-medium uk-flex-center">
           {kitsList.map((kit) => (
             <div key={kit.name} className="uk-width-1-4@m">

@@ -1,5 +1,5 @@
-import { getStrapiMedia } from "../lib/media"
 import NextImage from "next/image"
+import { getStrapiMedia } from "../lib/media"
 
 interface Props {
   image: any

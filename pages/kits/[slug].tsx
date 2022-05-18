@@ -1,10 +1,8 @@
-import React, { useState } from "react"
-import ReactMarkdown from "react-markdown"
-import Link from "next/link"
-import { fetchAPI } from "../../lib/api"
-import Layout from "../../components/layout"
-import NextImage from "../../components/image"
-import Seo from "../../components/seo"
+import { AspectRatio, getAspectRatio } from "../../lib/media"
+import {
+  DataManyBlobInResponse,
+  DataSingleBlobInResponse,
+} from "../../types/strapi"
 import {
   KitAttributes,
   KitResponse,
@@ -12,13 +10,15 @@ import {
   ProductCategoryMap,
   ProductResponse,
 } from "../../types/types"
-import {
-  DataManyBlobInResponse,
-  DataSingleBlobInResponse,
-} from "../../types/strapi"
-import { getStrapiMedia } from "../../lib/media"
-import { getStyleBlob, getThumb } from "../../lib/youtube-thumbnail"
-import ProductCardLargeImage from "../../components/product-card-large-image"
+import React, { useState } from "react"
+
+import Layout from "../../components/layout"
+import NextImage from "../../components/image"
+import ProductCardLandscape from "../../components/product-card-landscape"
+import ProductCardPortrait from "../../components/product-card-portrait"
+import ReactMarkdown from "react-markdown"
+import Seo from "../../components/seo"
+import { fetchAPI } from "../../lib/api"
 
 interface Props {
   kit: DataSingleBlobInResponse<KitAttributes>
@@ -27,8 +27,14 @@ interface Props {
 
 const KitPage = ({ kit, products }: Props) => {
   const { attributes } = kit
-  const { archetype, quote, short_description, name, thumbnail_img } =
-    attributes
+  const {
+    archetype,
+    quote,
+    main_description,
+    short_description,
+    name,
+    thumbnail_img,
+  } = attributes
   const { body, author } = quote.data.attributes
 
   const seo = {
@@ -57,57 +63,66 @@ const KitPage = ({ kit, products }: Props) => {
   return (
     <Layout categories={[]}>
       <Seo seo={seo} />
-      <section className="uk-section uk-section-xsmall uk-background-secondary">
-        <div className="uk-container uk-container-medium">
-          <section className="uk-grid uk-background-secondary uk-child-width-1-2@m  uk-flex-middle">
-            <div>
-              <h1 className="uk-text-bold uk-light">{name}</h1>
-              <h3 className="uk-light">
-                A curated kit for{" "}
-                <span className="heroHighlight uk-light">
-                  {archetype.data.attributes.name}
-                </span>
-              </h3>
-            </div>
-            <div>
-              <NextImage image={thumbnail_img} />
-            </div>
-          </section>
-        </div>
-      </section>
-      <div
-        className="uk-section uk-background-cover uk-panel uk-background-secondary uk-light"
-        // style={{
-        //   backgroundImage: `url('${getStrapiMedia(thumbnail_img)}')`,
-        // }}
-      >
+      <div className="uk-section uk-section-small uk-background-cover uk-panel uk-background-secondary uk-light">
         <div className="uk-container uk-container-small">
-          <p className="uk-text-center uk-text-large uk-text-bold">
-            &quot;{body}&quot; - {author}
-          </p>
           <p className="uk-text-center uk-text-large">{short_description}</p>
 
-          <div className="uk-flex uk-flex-center uk-margin-large-bottom">
-            {categories.map((category) => (
-              <a
-                key={category}
-                className={
-                  activeCategory === category
-                    ? "uk-active uk-button uk-button-default"
-                    : "uk-button uk-button-default"
-                }
-                onClick={() => setActiveCategory(category)}
-              >
-                {category}
-              </a>
-            ))}
+          <hr className="uk-divider-icon"></hr>
+          <div className="uk-sticky">
+            <h3 className="uk-text-center uk-text-bold">Select Category</h3>
+            <div className="uk-flex uk-flex-center uk-margin-large-bottom">
+              {categories.map((category) => (
+                <a
+                  key={category}
+                  className={
+                    activeCategory === category
+                      ? "uk-button uk-button-large uk-button-secondary uk-active"
+                      : "uk-button uk-button-large uk-button-secondary"
+                  }
+                  onClick={() => setActiveCategory(category)}
+                >
+                  {category}
+                </a>
+              ))}
+            </div>
           </div>
         </div>
 
         {categoryToProductMap[activeCategory].map((product) => {
-          return <ProductCardLargeImage key={product.id} product={product} />
+          return getAspectRatio(product.attributes.photo) ===
+            AspectRatio.Landscape ? (
+            <ProductCardLandscape key={product.id} product={product} />
+          ) : (
+            <ProductCardPortrait key={product.id} product={product} />
+          )
         })}
       </div>
+      <section className="uk-section uk-section-xsmall uk-background-secondary">
+        <div className="uk-container uk-container-medium">
+          <section className="uk-grid uk-background-secondary uk-child-width-1-1@m">
+            <p className="uk-text-center uk-text-default uk-text-italic uk-margin-large-bottom">
+              &quot;{body}&quot; - {author}
+            </p>
+          </section>
+          <section className="uk-grid uk-background-secondary uk-child-width-1-2@m uk-flex-center">
+            <div>
+              <NextImage image={thumbnail_img} />
+              <h1 className="uk-text-bold uk-light uk-text-center">{name}</h1>
+              <h3 className="uk-light uk-text-center">
+                A curated kit for{" "}
+                <span className="heroHighlight uk-light">
+                  {archetype.data.attributes.name}s
+                </span>
+              </h3>
+            </div>
+          </section>
+          <section className="uk-grid uk-background-secondary uk-child-width-1-2 uk-flex-center">
+            <div className="kitDescription uk-container">
+              <ReactMarkdown>{main_description}</ReactMarkdown>
+            </div>
+          </section>
+        </div>
+      </section>
       {/* <ReactMarkdown source={content} escapeHtml={false} /> */}
     </Layout>
   )
