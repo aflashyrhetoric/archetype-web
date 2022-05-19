@@ -13,9 +13,7 @@ const KitCard = ({ attributes }: { attributes: KitAttributes }) => {
       </div>
       <div className="uk-card-body">
         <NextImage image={thumbnail_img} />
-        <p>
-          <ReactMarkdown source={card_summary} escapeHtml={false} />
-        </p>
+        <ReactMarkdown>{card_summary}</ReactMarkdown>
         <div className="uk-flex uk-flex-center">
           <Link href={`/kits/${slug}`} passHref>
             <button className="uk-button uk-button-large uk-button-default uk-width-1-1">

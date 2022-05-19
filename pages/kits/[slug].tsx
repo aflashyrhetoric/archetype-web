@@ -98,32 +98,35 @@ const KitPage = ({ kit, products }: Props) => {
         })}
       </div>
       <section className="uk-section uk-section-xsmall uk-background-secondary">
-        <div className="uk-container uk-container-medium">
-          <section className="uk-grid uk-background-secondary uk-child-width-1-1@m">
-            <p className="uk-text-center uk-text-default uk-text-italic uk-margin-large-bottom">
-              &quot;{body}&quot; - {author}
-            </p>
-          </section>
-          <section className="uk-grid uk-background-secondary uk-child-width-1-2@m uk-flex-center">
+        <div className="uk-container uk-flex uk-flex-column uk-flex-center uk-child-width-1-1 uk-container-medium">
+          {/* <section className="uk-flex uk-background-secondary uk-child-width-1-2@m uk-flex-center">
             <div>
               <NextImage image={thumbnail_img} />
+              <p className="uk-text-center uk-text-default uk-text-italic">
+                &quot;{body}&quot; - {author}
+              </p>
+              <hr className="uk-divider-icon"></hr>
+            </div>
+          </section> */}
+          <section className="uk-background-secondary uk-child-width-1-2 uk-flex-center">
+            <div className="kitDescription uk-container uk-margin-large-bottom">
               <h1 className="uk-text-bold uk-light uk-text-center">{name}</h1>
-              <h3 className="uk-light uk-text-center">
+              <h3 className="uk-light uk-text-center uk-margin-bottom">
                 A curated kit for{" "}
                 <span className="heroHighlight uk-light">
                   {archetype.data.attributes.name}s
                 </span>
               </h3>
-            </div>
-          </section>
-          <section className="uk-grid uk-background-secondary uk-child-width-1-2 uk-flex-center">
-            <div className="kitDescription uk-container">
+              <hr className="uk-divider-icon"></hr>
+              <p className="uk-text-center uk-text-default uk-text-italic">
+                &quot;{body}&quot; - {author}
+              </p>
+              <hr className="uk-divider-icon"></hr>
               <ReactMarkdown>{main_description}</ReactMarkdown>
             </div>
           </section>
         </div>
       </section>
-      {/* <ReactMarkdown source={content} escapeHtml={false} /> */}
     </Layout>
   )
 }

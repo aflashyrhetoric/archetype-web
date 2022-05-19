@@ -1,4 +1,6 @@
+import { DataSingleBlobInResponse } from "../types/strapi"
 import Link from "next/link"
+import { ProductAttributes } from "../types/types"
 import React from "react"
 import { getStyleBlob } from "../lib/youtube-thumbnail"
 
