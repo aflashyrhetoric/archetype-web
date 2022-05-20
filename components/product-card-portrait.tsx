@@ -30,7 +30,7 @@ const ProductCardPortrait: React.FC<Props> = ({ product }: any) => {
     <div key={productName} className="productBackground uk-section uk-panel">
       <div className="uk-container uk-flex uk-child-width-1-2 uk-margin-large-bottom">
         <div className="uk-flex uk-flex-column">
-          <div className="productSummary uk-width-3-4 uk-margin-large uk-padding ko-border">
+          <div className="ko-border productSummary uk-width-3-4 uk-margin-large uk-padding">
             <h3 className="uk-text-bolder">{productName}</h3>
             <p className="uk-text-italic uk-margin-bottom">{brandName}</p>
 
@@ -46,7 +46,7 @@ const ProductCardPortrait: React.FC<Props> = ({ product }: any) => {
         <div className="uk-flex uk-flex-column">
           <div className="uk-width-1-1">
             <h3 className="uk-text-bolder uk-margin-small">Overview</h3>
-            <div className="ko-border uk-flex uk-width-1-1 uk-child-width-1-2 uk-padding-small uk-margin-small-bottom">
+            <div className="ko-border uk-flex uk-width-1-1 uk-child-width-1-2 uk-padding-small uk-margin-bottom">
               <div>
                 <p>Pros</p>
                 <ReactMarkdown>{pros}</ReactMarkdown>
@@ -57,9 +57,9 @@ const ProductCardPortrait: React.FC<Props> = ({ product }: any) => {
               </div>
             </div>
           </div>
-          <p className="productDescription uk-dropcap">
+          <div className="productDescription uk-dropcap">
             <ReactMarkdown>{long_description}</ReactMarkdown>
-          </p>
+          </div>
           <button className="uk-button uk-button-default">
             buy @ {brandName}
           </button>

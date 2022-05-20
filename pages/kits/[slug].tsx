@@ -10,7 +10,7 @@ import {
   ProductCategoryMap,
   ProductResponse,
 } from "../../types/types"
-import React, { useState } from "react"
+import React, { useState, useRef } from "react"
 
 import Layout from "../../components/layout"
 import NextImage from "../../components/image"
@@ -26,6 +26,9 @@ interface Props {
 }
 
 const KitPage = ({ kit, products }: Props) => {
+  const topOfProducts = useRef(null)
+  const executeScroll = () => topOfProducts.current.scrollIntoView()
+
   const { attributes } = kit
   const {
     archetype,
@@ -63,31 +66,34 @@ const KitPage = ({ kit, products }: Props) => {
   return (
     <Layout categories={[]}>
       <Seo seo={seo} />
-      <div className="uk-section uk-section-small uk-background-cover uk-panel uk-background-secondary uk-light">
+      <div className="uk-section uk-section-small uk-background-cover uk-background-secondary uk-light">
         <div className="uk-container uk-container-small">
+          <span uk-icon="icon: check"></span>
           <p className="uk-text-center uk-text-large">{short_description}</p>
-
-          <hr className="uk-divider-icon"></hr>
-          <div className="uk-sticky">
-            <h3 className="uk-text-center uk-text-bold">Select Category</h3>
-            <div className="uk-flex uk-flex-center uk-margin-large-bottom">
-              {categories.map((category) => (
-                <a
-                  key={category}
-                  className={
-                    activeCategory === category
-                      ? "uk-button uk-button-large uk-button-secondary uk-active"
-                      : "uk-button uk-button-large uk-button-secondary"
-                  }
-                  onClick={() => setActiveCategory(category)}
-                >
-                  {category}
-                </a>
-              ))}
-            </div>
+        </div>
+        <hr className="uk-divider-icon"></hr>
+        <h3 className="uk-text-center uk-text-bold">Select Category</h3>
+        <div className="ko-sticky">
+          <div className="uk-flex uk-flex-center">
+            {categories.map((category) => (
+              <a
+                key={category}
+                className={
+                  activeCategory === category
+                    ? "uk-button uk-button-large uk-button-secondary uk-active"
+                    : "uk-button uk-button-large uk-button-secondary"
+                }
+                onClick={() => {
+                  setActiveCategory(category)
+                  executeScroll()
+                }}
+              >
+                {category}
+              </a>
+            ))}
           </div>
         </div>
-
+        <div className="ko-sticky-ref" ref={topOfProducts}></div>
         {categoryToProductMap[activeCategory].map((product) => {
           return getAspectRatio(product.attributes.photo) ===
             AspectRatio.Landscape ? (

@@ -11,6 +11,7 @@ body {
   --font-family-default: "IBM Plex Sans", sans-serif;
   --font-size-default: 18px;
   --border-radius-default: 6px;
+  --gray: #222;
 }
 
 h1,
@@ -44,11 +45,12 @@ ol li {
 
 .productBackground {
   min-height: 80vh;
+  border-bottom: 1px solid gray;
 }
 
 .productPhoto {
   max-width: 100%;
-  padding: 20px;
+  padding: 10px;
   background: white;
   border-radius: var(--border-radius-default);
 }
@@ -69,8 +71,9 @@ ol li {
   background-position: center;
 }
 
-.productDescription {
-  font-size: 24px;
+.productDescription li,
+.productDescription p {
+  font-size: 18px;
   font-weight: 700;
   font-size: 24px;
 }
@@ -106,4 +109,17 @@ ol li {
   font-weight: 500;
   font-size: 24px;
   color: white;
+}
+
+.ko-sticky {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  padding: 20px;
+  background-color: var(--gray);
+}
+
+.ko-sticky-ref {
+  position: relative;
+  top: -50px;
 }
