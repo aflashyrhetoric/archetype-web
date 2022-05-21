@@ -38,8 +38,8 @@ const ProductCardLandscape: React.FC<Props> = ({ product }: any) => {
       ></div>
       <div className="uk-container uk-padding">
         <div className="uk-grid uk-position-relative uk-child-width-1-1 uk-child-width-1-2@m uk-margin-large-bottom">
-          <div className="uk-child-width-1-1 uk-child-width-3-4@m uk-margin-bottom">
-            <div className="productSummary uk-margin-large uk-padding ko-border">
+          <div className="uk-margin-bottom">
+            <div className="productSummary uk-margin uk-padding ko-border">
               <h3 className="uk-text-bolder">{productName}</h3>
               <p className="uk-text-italic uk-margin-bottom">{brandName}</p>
 
