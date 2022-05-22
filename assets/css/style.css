@@ -45,13 +45,18 @@ ol li {
 
 .productBackground {
   min-height: 80vh;
-  border-bottom: 1px solid gray;
+  border-bottom: 6px solid white;
 }
 
 .productPhoto {
   max-width: 100%;
-  padding: 10px;
-  background: white;
+  /* padding: 4px; */
+  /* background: white; */
+  /* background: #222; */
+}
+
+.productPhoto,
+.productPhoto img {
   border-radius: var(--border-radius-default);
 }
 
@@ -79,8 +84,8 @@ ol li {
 
 .animated {
   background: var(--gradient-string);
-  background-size: 300% 300%;
-  animation: gradient 5s normal infinite;
+  background-size: 400% 900%;
+  animation: gradient 20s alternate infinite;
   position: absolute;
   top: 0;
   left: 0;

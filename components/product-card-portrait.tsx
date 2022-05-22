@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useRef } from "react"
 import { DataSingleBlobInResponse } from "../types/strapi"
 import InTheMedia from "./in-the-media"
 import NextImage from "../components/image"
@@ -27,26 +27,26 @@ const ProductCardPortrait: React.FC<Props> = ({ product }: Props) => {
     media_product_reviews: { data: productReviews },
   } = product.attributes
 
+  const currentProductRef = useRef<HTMLDivElement>(null)
+
   useEffect(() => {
     const fetchPhotoColor = async () => {
       const gs = await imgSrcToLinearGradientString(getStrapiMedia(photo))
-      console.log(gs)
-      document.body.style.setProperty("--gradient-string", gs)
+      currentProductRef.current.style.setProperty("--gradient-string", gs)
     }
     fetchPhotoColor()
   })
-
-  // const bgColor = getColor(product.attributes.photo)
 
   return (
     <div
       key={productName}
       className="productBackground animated uk-position-relative portrait"
+      ref={currentProductRef}
     >
       <div className="uk-container uk-container-small uk-padding">
         <div className="uk-grid uk-child-width-1-1 uk-child-width-1-2@m uk-margin-large-bottom">
-          <div>
-            <div className="ko-border productSummary uk-margin-large uk-padding">
+          <div className="uk-margin uk-margin-remove-bottom@m">
+            <div className="ko-border productSummary uk-margin uk-padding">
               <h3 className="uk-text-bolder">{productName}</h3>
               <p className="uk-text-italic uk-margin-bottom">{brandName}</p>
 

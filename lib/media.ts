@@ -33,11 +33,13 @@ export const rgbToHex = ([r, g, b]: number[]) =>
 export const getColors = async (imgSrc: string) => {
   const img = await loadImage(imgSrc)
   const ct = new ColorThief()
-  const palette = ct.getPalette(img)
-  return [...palette, ...palette.reverse()].map((rgbColor) => {
+  const rawPalette = ct.getPalette(img)
+  // const palette = rawPalette.slice(-rawPalette.length - 2, 2)
+  const palette = rawPalette
+  return palette.map((rgbColor) => {
     // convert to string
     const [r, g, b] = rgbColor
-    return `rgba(${r}, ${g}, ${b}, 0.6)`
+    return `rgba(${r}, ${g}, ${b}, 1)`
   })
   // const paletteArrayOfHexValues = palette.map(rgbToHex)
   // console.log(paletteArrayOfHexValues)
@@ -46,8 +48,7 @@ export const getColors = async (imgSrc: string) => {
 
 export const imgSrcToLinearGradientString = async (imgSrc: string) => {
   const palette = await getColors(imgSrc)
-  const angle = "90"
-  console.log(palette)
+  const angle = "135"
   return `linear-gradient(${angle}deg, ${palette.join(", ")})`
 }
 

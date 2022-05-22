@@ -27,7 +27,8 @@ interface Props {
 
 const KitPage = ({ kit, products }: Props) => {
   const topOfProducts = useRef(null)
-  const executeScroll = () => topOfProducts.current.scrollIntoView()
+  const executeScroll = () =>
+    topOfProducts.current.scrollIntoView({ behavior: "smooth" })
 
   const { attributes } = kit
   const {
