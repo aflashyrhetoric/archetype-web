@@ -77,6 +77,25 @@ ol li {
   font-weight: 700;
 }
 
+.animated {
+  background: var(--gradient-string);
+  background-size: 300% 300%;
+  animation: gradient 5s normal infinite;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+}
+@keyframes gradient {
+  0% {
+    background-position: 0%;
+  }
+  100% {
+    background-position: 100%;
+  }
+}
+
 .productReview {
   position: relative;
   max-width: 380px;

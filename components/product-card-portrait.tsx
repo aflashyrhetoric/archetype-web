@@ -1,15 +1,16 @@
+import React, { useEffect, useState } from "react"
 import { DataSingleBlobInResponse } from "../types/strapi"
 import InTheMedia from "./in-the-media"
 import NextImage from "../components/image"
 import { ProductAttributes } from "../types/types"
-import React from "react"
 import ReactMarkdown from "react-markdown"
+import { getStrapiMedia, imgSrcToLinearGradientString } from "../lib/media"
 
 interface Props {
   product: DataSingleBlobInResponse<ProductAttributes>
 }
 
-const ProductCardPortrait: React.FC<Props> = ({ product }: any) => {
+const ProductCardPortrait: React.FC<Props> = ({ product }: Props) => {
   const {
     name: productName,
     photo,
@@ -26,8 +27,22 @@ const ProductCardPortrait: React.FC<Props> = ({ product }: any) => {
     media_product_reviews: { data: productReviews },
   } = product.attributes
 
+  useEffect(() => {
+    const fetchPhotoColor = async () => {
+      const gs = await imgSrcToLinearGradientString(getStrapiMedia(photo))
+      console.log(gs)
+      document.body.style.setProperty("--gradient-string", gs)
+    }
+    fetchPhotoColor()
+  })
+
+  // const bgColor = getColor(product.attributes.photo)
+
   return (
-    <div key={productName} className="productBackground uk-position-relative">
+    <div
+      key={productName}
+      className="productBackground animated uk-position-relative portrait"
+    >
       <div className="uk-container uk-container-small uk-padding">
         <div className="uk-grid uk-child-width-1-1 uk-child-width-1-2@m uk-margin-large-bottom">
           <div>
