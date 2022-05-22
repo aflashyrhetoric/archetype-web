@@ -28,7 +28,7 @@ const ProductCardPortrait: React.FC<Props> = ({ product }: any) => {
 
   return (
     <div key={productName} className="productBackground uk-position-relative">
-      <div className="uk-container uk-padding">
+      <div className="uk-container uk-container-small uk-padding">
         <div className="uk-grid uk-child-width-1-1 uk-child-width-1-2@m uk-margin-large-bottom">
           <div>
             <div className="ko-border productSummary uk-margin-large uk-padding">

@@ -114,7 +114,7 @@ const KitPage = ({ kit, products }: Props) => {
               <hr className="uk-divider-icon"></hr>
             </div>
           </section> */}
-          <section className="uk-background-secondary uk-child-width-1-2 uk-flex-center">
+          <section className="uk-background-secondary uk-child-width-1-2@m uk-flex-center">
             <div className="kitDescription uk-container uk-margin-large-bottom">
               <h1 className="uk-text-bold uk-light uk-text-center">{name}</h1>
               <h3 className="uk-light uk-text-center uk-margin-bottom">
