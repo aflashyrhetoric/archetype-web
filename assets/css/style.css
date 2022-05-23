@@ -134,6 +134,10 @@ ol li {
   color: white;
 }
 
+.ko-icon {
+  width: 60px;
+}
+
 .ko-sticky {
   position: sticky;
   top: 0;

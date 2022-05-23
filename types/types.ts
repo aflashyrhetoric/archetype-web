@@ -91,12 +91,20 @@ export type AboutSectionAttributes = timestamps & {
   about_archetype_text: string // rich text
 }
 
+export type FooterAttributes = timestamps & {
+  browse_by_archetypes: string
+  company_copy: string
+  footer_heading: string
+}
+
 export type AboutPageAttributes = timestamps & {
   seo: RelationSingle<SEOAttributes>
   hero: RelationSingle<HeroAttributes>
   about: RelationSingle<AboutSectionAttributes>
+  footer: RelationSingle<FooterAttributes>
 }
 
+export type FooterResponse = RelationSingle<FooterAttributes>
 export type AboutResponse = RelationSingle<AboutPageAttributes>
 
 export type KitResponse = RelationSingle<KitAttributes>
