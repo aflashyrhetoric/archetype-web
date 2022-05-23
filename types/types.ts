@@ -86,16 +86,18 @@ export type HeroAttributes = timestamps & {
   hero_image: RelationSingle<StrapiImageAttributes>
 }
 
-export type AboutAttributes = timestamps & {
+export type AboutSectionAttributes = timestamps & {
   page_heading: string
   about_archetype_text: string // rich text
 }
 
-export type AboutResponse = timestamps & {
+export type AboutPageAttributes = timestamps & {
   seo: RelationSingle<SEOAttributes>
   hero: RelationSingle<HeroAttributes>
-  about: RelationSingle<AboutAttributes>
+  about: RelationSingle<AboutSectionAttributes>
 }
+
+export type AboutResponse = RelationSingle<AboutPageAttributes>
 
 export type KitResponse = RelationSingle<KitAttributes>
 export type ProductResponse = RelationSingle<ProductAttributes>

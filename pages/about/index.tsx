@@ -5,16 +5,12 @@ import Seo from "../../components/seo"
 import { fetchAPI } from "../../lib/api"
 import { AboutResponse } from "../../types/types"
 
-const AboutPage = ({
-  about,
-  hero,
-  seo: { metaTitle, metaDescription, shareImage },
-}) => {
-  console.log(about)
+const AboutPage = ({ about, hero, seo }) => {
   const { page_heading, about_archetype_text } = about
   const { title, hero_image } = hero
+  const { metaTitle, metaDescription, shareImage } = seo
 
-  const seo = {
+  const seoData = {
     metaTitle,
     metaDescription,
     shareImage,
@@ -23,9 +19,13 @@ const AboutPage = ({
 
   return (
     <Layout categories={[]}>
-      <Seo seo={seo} />
-      <div>
-        <h1>{title}</h1>
+      <Seo seo={seoData} />
+      <div className="uk-section uk-section-small uk-background-cover uk-background-secondary uk-light">
+        <div className="uk-container uk-container-small">
+          <span uk-icon="icon: check"></span>
+          <p className="uk-text-center uk-text-large">{page_heading}</p>
+        </div>
+        <hr className="uk-divider-icon"></hr>
         <NextImage image={hero_image} />
       </div>
     </Layout>
@@ -40,13 +40,14 @@ export async function getStaticProps() {
       seo: { populate: "*" },
     },
   })
-  console.log(aboutRes)
 
-  const { hero } = aboutRes.data.attributes
+  const { hero, about, seo } = aboutRes.data.attributes
 
   return {
     props: {
       hero,
+      about,
+      seo,
     },
     revalidate: 1,
   }
