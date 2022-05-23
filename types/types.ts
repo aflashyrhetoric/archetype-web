@@ -75,6 +75,27 @@ export type KitAttributes = timestamps & {
   products: RelationMany<ProductAttributes>
   quote: QuoteResponse
 }
+export type SEOAttributes = timestamps & {
+  metaTitle: string
+  metaDescription: string
+  shareImage: RelationSingle<StrapiImageAttributes>
+}
+
+export type HeroAttributes = timestamps & {
+  title: string
+  hero_image: RelationSingle<StrapiImageAttributes>
+}
+
+export type AboutAttributes = timestamps & {
+  page_heading: string
+  about_archetype_text: string // rich text
+}
+
+export type AboutResponse = timestamps & {
+  seo: RelationSingle<SEOAttributes>
+  hero: RelationSingle<HeroAttributes>
+  about: RelationSingle<AboutAttributes>
+}
 
 export type KitResponse = RelationSingle<KitAttributes>
 export type ProductResponse = RelationSingle<ProductAttributes>

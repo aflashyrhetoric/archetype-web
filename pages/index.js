@@ -30,14 +30,16 @@ const Home = ({ hero, seo, explore_archetypes }) => {
         </div>
       </section>
       <section className="uk-section">
-        <h2 className="uk-text-center uk-text-bold">{heading}</h2>
-        <p className="uk-text-center uk-margin-large-bottom">{subheading}</p>
-        <div className="uk-grid uk-grid-medium uk-flex-center">
-          {kitsList.map((kit) => (
-            <div key={kit.name} className="uk-width-1-4@m">
-              <KitCard attributes={kit.attributes} />
-            </div>
-          ))}
+        <div className="uk-container">
+          <h2 className="uk-text-center uk-text-bold">{heading}</h2>
+          <p className="uk-text-center uk-margin-large-bottom">{subheading}</p>
+          <div className="uk-grid uk-grid-match uk-flex-center">
+            {kitsList.map((kit) => (
+              <div key={kit.name} className="uk-width-1-2@s uk-width-1-3@m">
+                <KitCard attributes={kit.attributes} />
+              </div>
+            ))}
+          </div>
         </div>
       </section>
     </Layout>

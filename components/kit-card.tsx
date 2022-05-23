@@ -7,12 +7,17 @@ import ReactMarkdown from "react-markdown"
 const KitCard = ({ attributes }: { attributes: KitAttributes }) => {
   const { name, card_summary, slug, thumbnail_img } = attributes
   return (
-    <div className="uk-card uk-card-default uk-card-hover" key={name}>
-      <div className="uk-card-header">
-        <h3 className="uk-card-title uk-text-center uk-text-bold">{name}</h3>
-      </div>
-      <div className="uk-card-body">
+    <div
+      className="uk-card uk-card-default uk-card-hover uk-margin-small-bottom"
+      key={name}
+    >
+      <div className="uk-card-media-top">
         <NextImage image={thumbnail_img} />
+      </div>
+      {/* <div className="uk-card-header"></div> */}
+      <div className="uk-card-body uk-flex uk-flex-column uk-flex-between">
+        <div className="uk-card-badge uk-label">updated</div>
+        <h3 className="uk-card-title uk-text-center uk-text-bold">{name}</h3>
         <ReactMarkdown>{card_summary}</ReactMarkdown>
         <div className="uk-flex uk-flex-center">
           <Link href={`/kits/${slug}`} passHref>

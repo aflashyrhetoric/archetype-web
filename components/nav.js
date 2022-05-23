@@ -12,6 +12,11 @@ const Nav = ({ categories }) => {
                 <a>archetype</a>
               </Link>
             </li>
+            <li>
+              <Link href="/about">
+                <a>about</a>
+              </Link>
+            </li>
           </ul>
         </div>
         <div className="uk-navbar-right uk-background-secondary">

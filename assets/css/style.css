@@ -85,7 +85,7 @@ ol li {
 .animated {
   background: var(--gradient-string);
   background-size: 400% 900%;
-  animation: gradient 20s alternate infinite;
+  animation: gradient 30s alternate infinite;
   position: absolute;
   top: 0;
   left: 0;
@@ -146,3 +146,9 @@ ol li {
   position: relative;
   top: -90px;
 }
+
+/* UI KIT Overrides */
+.uk-card-body p {
+  min-height: 85px;
+}
+
