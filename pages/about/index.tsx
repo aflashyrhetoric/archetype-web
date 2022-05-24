@@ -5,13 +5,13 @@ import NextImage from "../../components/image"
 import Layout from "../../components/layout"
 import Seo from "../../components/seo"
 import { fetchAPI } from "../../lib/api"
-import { AboutResponse } from "../../types/types"
+import { AboutPageProps, AboutResponse } from "../../types/types"
 
-const AboutPage = ({ about, hero, seo, footer }) => {
-  console.log(footer)
+const AboutPage = ({ about, hero, seo, global }: AboutPageProps) => {
   const { page_heading, about_archetype_text } = about
   const { title, hero_image } = hero
   const { metaTitle, metaDescription, shareImage } = seo
+  console.log(global)
 
   const seoData = {
     metaTitle,
@@ -35,7 +35,7 @@ const AboutPage = ({ about, hero, seo, footer }) => {
           <ReactMarkdown>{about_archetype_text}</ReactMarkdown>
         </div>
       </div>
-      <Footer footer={footer} />
+      {/* <Footer footer={footer} /> */}
     </Layout>
   )
 }
@@ -46,18 +46,16 @@ export async function getStaticProps() {
       hero: { populate: "*" },
       about: { populate: "*" },
       seo: { populate: "*" },
-      footer: { populate: "*" },
     },
   })
 
-  const { hero, about, seo, footer } = aboutRes.data.attributes
+  const { hero, about, seo } = aboutRes.data.attributes
 
   return {
     props: {
       hero,
       about,
       seo,
-      footer,
     },
     revalidate: 1,
   }

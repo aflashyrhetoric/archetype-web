@@ -12,6 +12,8 @@ type timestamps = {
   publishedAt: string
 }
 
+type shared = timestamps & GlobalAttributes
+
 export enum ProductCategory {
   TheDesk = "the desk",
   IO = "i/o",
@@ -21,18 +23,18 @@ export enum ProductCategory {
   Decor = "decor",
 }
 
-export type MediaProductReviewAttributes = timestamps & {
+export type MediaProductReviewAttributes = shared & {
   videoTitle: string
   url: string
 }
 
-export type BrandAttributes = timestamps & {
+export type BrandAttributes = shared & {
   name: string
 }
 
 export type ImageRelation = RelationSingle<StrapiImageAttributes>
 
-export type ProductAttributes = timestamps & {
+export type ProductAttributes = shared & {
   name: string
   url: string
   affiliate_link: string
@@ -48,7 +50,7 @@ export type ProductAttributes = timestamps & {
   media_product_reviews: RelationMany<MediaProductReviewAttributes>
 }
 
-export type QuoteAttributes = timestamps & {
+export type QuoteAttributes = shared & {
   body: string
   author: string
 }
@@ -61,7 +63,7 @@ export type ArchetypeAttributes = {
   publishedAt: string
 }
 
-export type KitAttributes = timestamps & {
+export type KitAttributes = shared & {
   name: string
   slug: string
 
@@ -75,41 +77,48 @@ export type KitAttributes = timestamps & {
   products: RelationMany<ProductAttributes>
   quote: QuoteResponse
 }
-export type SEOAttributes = timestamps & {
+export type SEOAttributes = shared & {
   metaTitle: string
   metaDescription: string
   shareImage: RelationSingle<StrapiImageAttributes>
 }
 
-export type HeroAttributes = timestamps & {
+export type HeroAttributes = shared & {
   title: string
   hero_image: RelationSingle<StrapiImageAttributes>
 }
 
-export type AboutSectionAttributes = timestamps & {
+export type AboutSectionAttributes = shared & {
   page_heading: string
   about_archetype_text: string // rich text
 }
 
-export type FooterAttributes = timestamps & {
+export type GlobalAttributes = {
+  footer: RelationSingle<FooterAttributes>
+}
+
+export type FooterAttributes = shared & {
   browse_by_archetypes: string
   company_copy: string
   footer_heading: string
 }
 
-export type AboutPageAttributes = timestamps & {
+export type AboutPageAttributes = shared & {
   seo: RelationSingle<SEOAttributes>
   hero: RelationSingle<HeroAttributes>
   about: RelationSingle<AboutSectionAttributes>
-  footer: RelationSingle<FooterAttributes>
 }
 
-export type FooterResponse = RelationSingle<FooterAttributes>
-export type AboutResponse = RelationSingle<AboutPageAttributes>
+// ! PageResponse Type
+export type PageResponse<T> = RelationSingle<T>
+export type PageProps<T> = T & shared
 
-export type KitResponse = RelationSingle<KitAttributes>
-export type ProductResponse = RelationSingle<ProductAttributes>
-export type QuoteResponse = RelationSingle<QuoteAttributes>
+export type FooterResponse = PageResponse<FooterAttributes>
+export type AboutResponse = PageResponse<AboutPageAttributes>
+export type AboutPageProps = PageProps<AboutPageAttributes>
+export type KitResponse = PageResponse<KitAttributes>
+export type ProductResponse = PageResponse<ProductAttributes>
+export type QuoteResponse = PageResponse<QuoteAttributes>
 
 export type ProductCategoryMap = {
   [key in ProductCategory]: DataManyBlobInResponse<ProductAttributes>

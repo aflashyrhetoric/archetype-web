@@ -12,7 +12,7 @@ interface Props {
 const Footer: React.FC<Props> = ({ footer }: Props) => {
   console.log(footer)
   // const { browse_by_archetypes, company_copy, footer_heading } =
-    // footer.data.attributes
+  // footer.data.attributes
 
   return (
     // <div className="uk-container uk-position-relative">
