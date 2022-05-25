@@ -7,11 +7,13 @@ import Seo from "../../components/seo"
 import { fetchAPI } from "../../lib/api"
 import { AboutPageProps, AboutResponse } from "../../types/types"
 
-const AboutPage = ({ about, hero, seo, global }: AboutPageProps) => {
+const AboutPage = (props: AboutPageProps) => {
+  console.log("props", props.global)
+  const { about, hero, seo, global } = props
   const { page_heading, about_archetype_text } = about
   const { title, hero_image } = hero
   const { metaTitle, metaDescription, shareImage } = seo
-  console.log(global)
+  // console.log(global)
 
   const seoData = {
     metaTitle,
@@ -35,7 +37,7 @@ const AboutPage = ({ about, hero, seo, global }: AboutPageProps) => {
           <ReactMarkdown>{about_archetype_text}</ReactMarkdown>
         </div>
       </div>
-      {/* <Footer footer={footer} /> */}
+      <Footer footer={global.attributes.footer} />
     </Layout>
   )
 }

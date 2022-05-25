@@ -7,6 +7,7 @@ import {
 } from "./strapi"
 
 type timestamps = {
+  id: string
   createdAt: string
   updatedAt: string
   publishedAt: string
@@ -94,7 +95,7 @@ export type AboutSectionAttributes = shared & {
 }
 
 export type GlobalAttributes = {
-  footer: RelationSingle<FooterAttributes>
+  global: DataSingleBlobInResponse<FooterAttributes>
 }
 
 export type FooterAttributes = shared & {
@@ -104,9 +105,9 @@ export type FooterAttributes = shared & {
 }
 
 export type AboutPageAttributes = shared & {
-  seo: RelationSingle<SEOAttributes>
-  hero: RelationSingle<HeroAttributes>
-  about: RelationSingle<AboutSectionAttributes>
+  seo: SEOAttributes
+  hero: HeroAttributes
+  about: AboutSectionAttributes
 }
 
 // ! PageResponse Type
