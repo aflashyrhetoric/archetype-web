@@ -18,6 +18,7 @@ const ProductCardLandscape: React.FC<Props> = ({ product }: any) => {
         attributes: { name: brandName },
       },
     },
+    url,
     affiliate_link,
     price,
     pros,
@@ -43,7 +44,10 @@ const ProductCardLandscape: React.FC<Props> = ({ product }: any) => {
               <h3 className="uk-text-bolder">{productName}</h3>
               <p className="uk-text-italic uk-margin-bottom">{brandName}</p>
 
-              <a href={affiliate_link} className="uk-button uk-button-default">
+              <a
+                href={affiliate_link || url}
+                className="uk-button uk-button-default"
+              >
                 ${price} @ {brandName}
               </a>
             </div>
@@ -62,9 +66,12 @@ const ProductCardLandscape: React.FC<Props> = ({ product }: any) => {
             <div className="productDescription uk-dropcap">
               <ReactMarkdown>{long_description}</ReactMarkdown>
             </div>
-            <button className="uk-button uk-button-default">
+            <a
+              href={affiliate_link || url}
+              className="uk-button uk-button-default"
+            >
               buy @ {brandName}
-            </button>
+            </a>
           </div>
         </div>
       </div>

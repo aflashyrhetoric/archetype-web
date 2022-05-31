@@ -106,15 +106,6 @@ const KitPage = ({ kit, products }: Props) => {
       </div>
       <section className="uk-section uk-section-xsmall uk-background-secondary">
         <div className="uk-container uk-flex uk-flex-column uk-flex-center uk-child-width-1-1 uk-container-medium">
-          {/* <section className="uk-flex uk-background-secondary uk-child-width-1-2@m uk-flex-center">
-            <div>
-              <NextImage image={thumbnail_img} />
-              <p className="uk-text-center uk-text-default uk-text-italic">
-                &quot;{body}&quot; - {author}
-              </p>
-              <hr className="uk-divider-icon"></hr>
-            </div>
-          </section> */}
           <section className="uk-background-secondary uk-child-width-1-2@m uk-flex-center">
             <div className="kitDescription uk-container uk-margin-large-bottom">
               <h1 className="uk-text-bold uk-light uk-text-center">{name}</h1>
@@ -156,34 +147,39 @@ export async function getStaticProps({ params }) {
     filters: {
       slug: params.slug,
     },
-    populate: "*",
-  })
-
-  const productsRes: ProductResponse = await fetchAPI("/products", {
     populate: {
-      photo: {
+      thumbnail_img: {
         populate: "*",
       },
-      brand: {
-        fields: ["name"],
-      },
-      media_product_reviews: {
-        populate: "*",
-      },
-      kits: {
-        filters: {
-          name: {
-            $eq: params.slug,
+      products: {
+        populate: {
+          photo: {
+            populate: "*",
+          },
+          media_product_reviews: {
+            populate: "*",
+          },
+          brand: {
+            populate: "*",
           },
         },
+      },
+      quote: {
+        populate: "*",
+      },
+      archetype: {
+        populate: "*",
       },
     },
   })
 
+  const x = kitsRes.data[0].attributes
+  console.log(JSON.stringify(x, null, 2))
+
   return {
     props: {
       kit: kitsRes.data[0],
-      products: productsRes.data,
+      products: kitsRes.data[0].attributes.products.data, //kitsRes.data[0].attributes.products.data,
     },
     revalidate: 1,
   }
