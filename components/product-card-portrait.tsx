@@ -43,7 +43,7 @@ const ProductCardPortrait: React.FC<Props> = ({ product }: Props) => {
       className="productBackground animated uk-position-relative portrait"
       ref={currentProductRef}
     >
-      <div className="uk-container uk-container-small uk-padding">
+      <div className="uk-container uk-padding">
         <div className="uk-grid uk-child-width-1-1 uk-child-width-1-2@m uk-margin-large-bottom">
           <div className="uk-margin uk-margin-remove-bottom@m">
             <div className="ko-border productSummary uk-margin uk-padding">

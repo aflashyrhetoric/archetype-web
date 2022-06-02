@@ -37,7 +37,7 @@ const ProductCardLandscape: React.FC<Props> = ({ product }: any) => {
           backgroundImage: `url('${getStrapiMedia(photo)}')`,
         }}
       ></div>
-      <div className="uk-container uk-container-small uk-padding">
+      <div className="uk-container uk-padding">
         <div className="uk-grid uk-position-relative uk-child-width-1-1 uk-child-width-1-2@m uk-margin-large-bottom">
           <div className="uk-margin-bottom">
             <div className="productSummary uk-margin uk-padding ko-border">
